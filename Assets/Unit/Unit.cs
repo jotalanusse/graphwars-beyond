@@ -26,7 +26,7 @@ public class Unit : MonoBehaviour
         GameObject gameObject = collision.gameObject;
         if (gameObject.tag == "Projectile")
         {
-           if (gameObject.GetComponent<Projectile>().owner != owner)
+           if (gameObject.transform.parent != transform)
            {
                 transform.GetComponent<SpriteRenderer>().color = Color.red;
            }
