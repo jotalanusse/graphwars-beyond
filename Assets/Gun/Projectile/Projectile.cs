@@ -2,28 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IProjectile
 {
     public float speed = 5f;
-    public int maxStepsPerFrame = 5;
-    public float waypointDistanceThresholdX = 1f;
-    public float waypointDistanceThresholdY = 10f;
+    private int maxStepsPerFrame = 5;
+    private float waypointDistanceThresholdX = 1f;
+    private float waypointDistanceThresholdY = 10f;
 
     public List<Vector2> waypoints = new List<Vector2>();
     private int currentWaypointIndex = 0;
-
-    public Player owner;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.tag = "Projectile";
+        DiasbleFriendlyCollissions();
+    }
+    void Update()
+    {
+        UpdatePosition();
+    }
 
+    void DiasbleFriendlyCollissions()
+    {
         Physics2D.IgnoreCollision(transform.parent.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdatePosition()
     {
         Vector2 currentWaypoint = waypoints[currentWaypointIndex];
 
@@ -39,9 +44,8 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            Debug.Log("Distance to next waypoint was: " + waypointDistanceX + ":" + waypointDistanceY);
-            transform.GetComponent<SpriteRenderer>().color = Color.red;
-            Destroy(gameObject, 5);
+            Debug.Log("Distance to next waypoint was: " + waypointDistanceX + ":" + waypointDistanceY); // TODO: Remove
+            Despawn(5);
         }
 
         // If we reached our waypoint we target the next one
@@ -56,5 +60,10 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject, 5);
             }
         }
+    }
+
+    void Despawn(int seconds)
+    {
+        Destroy(gameObject, seconds);
     }
 }
