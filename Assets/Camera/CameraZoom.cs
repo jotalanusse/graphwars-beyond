@@ -24,12 +24,13 @@ public class CameraZoom : MonoBehaviour
     {
         if (!UIState.IsMouseOverUI())
         {
-            zoom = Mathf.Clamp(newZoom(zoom), minZoom, maxZoom);
+            float newZoom = CalculateZoom(zoom);
+            zoom = Mathf.Clamp(newZoom, minZoom, maxZoom);
             GetComponent<Camera>().orthographicSize = zoom;
         }
     }
 
-    float newZoom(float zoom)
+    float CalculateZoom(float zoom)
     {
         if (Input.mouseScrollDelta.y > 0)
         {

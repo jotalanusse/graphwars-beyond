@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -1508370091118938377}
   - component: {fileID: 8155251171890965459}
   - component: {fileID: 4700513482120831928}
+  - component: {fileID: 8232008221914246823}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Untagged
@@ -154,8 +155,29 @@ MonoBehaviour:
   expression: 
   parsedExpression: 
   validExpression: 0
-  step: 0.01
-  maxSteps: 10000
+  step: 0.001
+  maxSteps: 100000
   range: 50
   tracer: {fileID: 4218177987814912978, guid: de6efdff1814e4648a2a8aab1d7bd3ac, type: 3}
   projectile: {fileID: 5616965803388890592, guid: 4abc6dc0393646444888ebc9817762d2, type: 3}
+--- !u!50 &8232008221914246823
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3762480317535747312}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

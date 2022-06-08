@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public interface IProjectile
 {
-    // void OnTargetCollide();
+    void OnUnitCollide(GameObject unit);
     // void OnObstacleCollide();
     // void OnPowerUpCollide()
 }
