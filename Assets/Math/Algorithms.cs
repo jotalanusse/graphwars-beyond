@@ -83,7 +83,7 @@ public class Algorithms : MonoBehaviour
         return Math.Sqrt(ax * ax + ay * ay);
     }
 
-    public void RamerDouglasPeucker(List<Vector2> points, double epsilon, List<Vector2> output)
+    public List<Vector2> RamerDouglasPeucker(List<Vector2> points, double epsilon)
     {
         if (points.Count < 2)
         {
@@ -91,32 +91,33 @@ public class Algorithms : MonoBehaviour
         }
 
         // Find the point with the maximum distance from line between the start and end
-        double dmax = 0.0;
+        double maxDistance = 0.0;
         int index = 0;
-        int end = points.Count - 1;
-        for (int i = 1; i < end; i += 1)
+        for (int i = 1; i < points.Count - 1; i += 1)
         {
-            double d = PerpendicularDistance(points[i], points[0], points[end]);
-            if (d > dmax)
+            double distance = PerpendicularDistance(points[i], points[0], points[points.Count - 1]);
+            if (distance > maxDistance)
             {
                 index = i;
-                dmax = d;
+                maxDistance = distance;
             }
         }
 
+        List<Vector2> output = new List<Vector2>();
+
         // If max distance is greater than epsilon, recursively simplify
-        if (dmax > epsilon)
+        if (maxDistance > epsilon)
         {
-            List<Vector2> recResults1 = new List<Vector2>();
-            List<Vector2> recResults2 = new List<Vector2>();
             List<Vector2> firstLine = points.Take(index + 1).ToList();
             List<Vector2> lastLine = points.Skip(index).ToList();
-            RamerDouglasPeucker(firstLine, epsilon, recResults1);
-            RamerDouglasPeucker(lastLine, epsilon, recResults2);
 
-            // build the result list
+            List<Vector2> recResults1 = RamerDouglasPeucker(firstLine, epsilon);
+            List<Vector2> recResults2 = RamerDouglasPeucker(lastLine, epsilon);
+
+            // Build the result list
             output.AddRange(recResults1.Take(recResults1.Count - 1));
             output.AddRange(recResults2);
+
             if (output.Count < 2) throw new Exception("Problem assembling output");
         }
         else
@@ -126,5 +127,7 @@ public class Algorithms : MonoBehaviour
             output.Add(points[0]);
             output.Add(points[points.Count - 1]);
         }
+
+        return output;
     }
 }

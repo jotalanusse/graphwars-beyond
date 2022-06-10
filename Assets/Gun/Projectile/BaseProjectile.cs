@@ -35,26 +35,28 @@ public class BaseProjectile : MonoBehaviour
         {
             Vector2 currentWaypoint = waypoints[currentWaypointIndex];
 
-            float waypointDistanceX = Math.Abs(currentWaypoint.x - transform.position.x);
-            float waypointDistanceY = Math.Abs(currentWaypoint.y - transform.position.y);
+            // float waypointDistanceX = Math.Abs(currentWaypoint.x - transform.position.x);
+            // float waypointDistanceY = Math.Abs(currentWaypoint.y - transform.position.y);
 
             // If the current waypoint is very far the function is probably not continuous (not viable)
-            if (waypointDistanceX <= waypointDistanceThresholdX && waypointDistanceY <= waypointDistanceThresholdY)
-            {
-                Rigidbody2D projectileRigidbody = transform.GetComponent<Rigidbody2D>();
+            /*            if (waypointDistanceX <= waypointDistanceThresholdX && waypointDistanceY <= waypointDistanceThresholdY)
+                        {
 
-                Vector2 direction = currentWaypoint - (Vector2)transform.position;
-                projectileRigidbody.velocity = direction.normalized * speed;
-            }
-            else
-            {
-                // Debug.Log("Distance to next waypoint was: " + waypointDistanceX + ":" + waypointDistanceY); // TODO: Remove
-                Despawn(5); // TODO: Change
-            }
+                        }
+                        else
+                        {
+                            // Debug.Log("Distance to next waypoint was: " + waypointDistanceX + ":" + waypointDistanceY); // TODO: Remove
+                            Despawn(5); // TODO: Change
+                        }*/
+
+            Rigidbody2D projectileRigidbody = transform.GetComponent<Rigidbody2D>();
+
+            Vector2 direction = currentWaypoint - (Vector2)transform.position;
+            projectileRigidbody.velocity = direction.normalized * speed;
 
             // If we are close enough vontinue to the next one
             float waypointDistance = Vector2.Distance(transform.position, currentWaypoint);
-            if (waypointDistance <= 0.15)
+            if (waypointDistance <= 0.3)
             {
                 if (currentWaypointIndex < waypoints.Count - 1)
                 {

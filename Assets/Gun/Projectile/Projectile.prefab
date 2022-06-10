@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f9d5e370f06d1469b50cf3a5e67ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 100
+  speed: 20
   waypointsPerFrame: 25
   waypoints: []
 --- !u!114 &6555981185924735243

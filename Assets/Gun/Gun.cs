@@ -7,18 +7,23 @@ using org.mariuszgromada.math.mxparser;
 public class Gun : MonoBehaviour
 {
     public GameObject mathGameObject;
+
+    // Helpers
     private Functions mathFunctions;
     private Algorithms mathAlgorithms;
 
-    // Function behaiviour
+    // Projectile function
+    private Function projectilePathFunction;
     public string expression;
     public string parsedExpression;
     public bool validExpression;
-    private Function projectilePathFunction;
 
-    public float step = 0.05f;
-    public int maxSteps = 3000;
-    public float range = 50f;
+    private float step = 0.01f;
+    private int maxSteps = 10000;
+    private float range = 50f;
+
+    // Line simplification
+    private float epsilon = 0.008f;
 
     // Game objects
     public GameObject tracer;
@@ -43,25 +48,15 @@ public class Gun : MonoBehaviour
         Vector2 unitCenter = waypointsOffset + lowestWaypoint;
 
         // TODO: if the function has a root it has to be the player's position
-
         List<Vector2> offsettedWaypoints = mathFunctions.AddWaypointsOffset(waypoints, waypointsOffset);
         List<Vector2> trimmedWaypoints = mathFunctions.TrimWaypoints(offsettedWaypoints, unitCenter);
-
-        SpawnProjectile(trimmedWaypoints);
-        foreach (Vector2 waypoint in trimmedWaypoints)
-        {
-            // Instantiate(tracer, waypoint, Quaternion.identity);
-        }
-
-        /////////////// TEST ///////////////
-        List<Vector2> optimizedWaypoints = new List<Vector2>();
-        mathAlgorithms.RamerDouglasPeucker(new List<Vector2>(trimmedWaypoints), 0.008, optimizedWaypoints);
+        List<Vector2> optimizedWaypoints = mathAlgorithms.RamerDouglasPeucker(new List<Vector2>(trimmedWaypoints), epsilon);
 
         SpawnProjectile(optimizedWaypoints);
-        foreach (Vector2 waypoint in optimizedWaypoints)
+/*        foreach (Vector2 waypoint in optimizedWaypoints)
         {
-            // Instantiate(tracer, waypoint, Quaternion.identity);
-        }
+            Instantiate(tracer, waypoint, Quaternion.identity);
+        }*/
 
         Debug.Log("Waypoints [" + trimmedWaypoints.Count + "], optimized [" + optimizedWaypoints.Count + "]");
     }
