@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7388027270067090796}
   - component: {fileID: 2863629286123883939}
+  - component: {fileID: -6308375901258645761}
   m_Layer: 0
   m_Name: Math
   m_TagString: Untagged
@@ -42,5 +43,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efa284824bc24bf4ca1d885283d3d6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6308375901258645761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047920071423635554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43906dffb99c27428f8588e9d9e03a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

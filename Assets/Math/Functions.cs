@@ -7,10 +7,6 @@ using UnityEngine;
 
 public class Functions : MonoBehaviour
 {
-    void Start()
-    {
-
-    }
     public Expression ParseMathExpression(string expression)
     {
         RemoveUnwantedKeywords(); // TODO: Find a way not to call this everytime

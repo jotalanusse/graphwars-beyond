@@ -155,8 +155,8 @@ MonoBehaviour:
   expression: 
   parsedExpression: 
   validExpression: 0
-  step: 0.001
-  maxSteps: 100000
+  step: 0.01
+  maxSteps: 10000
   range: 50
   tracer: {fileID: 4218177987814912978, guid: de6efdff1814e4648a2a8aab1d7bd3ac, type: 3}
   projectile: {fileID: 5616965803388890592, guid: 4abc6dc0393646444888ebc9817762d2, type: 3}

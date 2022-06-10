@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour
 {
     public GameObject mathGameObject;
     private Functions mathFunctions;
+    private Algorithms mathAlgorithms;
 
     // Function behaiviour
     public string expression;
@@ -27,6 +28,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         mathFunctions = mathGameObject.GetComponent<Functions>();
+        mathAlgorithms = mathGameObject.GetComponent<Algorithms>();
     }
 
     public void Shoot()
@@ -40,18 +42,34 @@ public class Gun : MonoBehaviour
         Vector2 waypointsOffset = -lowestWaypoint + unitPosition;
         Vector2 unitCenter = waypointsOffset + lowestWaypoint;
 
-        Instantiate(tracer, unitCenter, Quaternion.identity);
+        // TODO: if the function has a root it has to be the player's position
 
         List<Vector2> offsettedWaypoints = mathFunctions.AddWaypointsOffset(waypoints, waypointsOffset);
         List<Vector2> trimmedWaypoints = mathFunctions.TrimWaypoints(offsettedWaypoints, unitCenter);
 
         SpawnProjectile(trimmedWaypoints);
+        foreach (Vector2 waypoint in trimmedWaypoints)
+        {
+            // Instantiate(tracer, waypoint, Quaternion.identity);
+        }
+
+        /////////////// TEST ///////////////
+        List<Vector2> optimizedWaypoints = new List<Vector2>();
+        mathAlgorithms.RamerDouglasPeucker(new List<Vector2>(trimmedWaypoints), 0.008, optimizedWaypoints);
+
+        SpawnProjectile(optimizedWaypoints);
+        foreach (Vector2 waypoint in optimizedWaypoints)
+        {
+            // Instantiate(tracer, waypoint, Quaternion.identity);
+        }
+
+        Debug.Log("Waypoints [" + trimmedWaypoints.Count + "], optimized [" + optimizedWaypoints.Count + "]");
     }
 
     void SpawnProjectile(List<Vector2> waypoints)
     {
         GameObject projectileInstance = Instantiate(projectile, waypoints[0], Quaternion.identity); // Instanciate the projectile
-        projectileInstance.GetComponent<Projectile>().waypoints = waypoints;
+        projectileInstance.GetComponent<BaseProjectile>().waypoints = waypoints;
 
         projectileInstance.transform.SetParent(transform);
     }
