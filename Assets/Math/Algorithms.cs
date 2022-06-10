@@ -6,79 +6,27 @@ using UnityEngine;
 
 public class Algorithms : MonoBehaviour
 {
-    /*    public List<Vector2> DouglasPeucker(List<Vector2> points, float epsilon)
-        {
-            // Find the point with the maximum distance
-            float dmax = 0;
-            int index = 0;
-            int end = points.Count - 1;
-            for (int i = 0; i < end; i += 1)
-            {
-
-                Vector2 startingPoint = points[0];
-                Vector2 endPoint = points[end];
-                Vector2 direction = endPoint - startingPoint;
-
-                float d = PerpendicularDistance(points[i], new Ray2D(startingPoint, direction.normalized));
-
-                if (d > dmax)
-                {
-                    index = i;
-                    dmax = d;
-                }
-            }
-
-            List<Vector2> resultPoints = new List<Vector2>();
-
-            // If max distance is greater than epsilon, recursively simplify
-            if (dmax > epsilon)
-            {
-                // Recursive call
-                List<Vector2> recResults1 = DouglasPeucker(points.GetRange(0, index - 1), epsilon);
-                List<Vector2> recResults2 = DouglasPeucker(points.GetRange(index, end), epsilon);
-
-                // Build the result list
-                resultPoints.AddRange(recResults1.GetRange(0, recResults1.Count - 2));
-                resultPoints.AddRange(recResults2.GetRange(0, recResults2.Count - 1));
-            }
-            else
-            {
-                resultPoints.Add(points[0]);
-                resultPoints.Add(points[end]);
-                // resultPoints = { PointList[1], PointList[end] }
-            }
-
-            // Return the result
-            return resultPoints;
-        }
-
-        public float PerpendicularDistance(Vector2 point, Ray2D line)
-        {
-            float distance = Vector3.Cross(line.direction, point - line.origin).magnitude;
-            return distance;
-        }*/
-
     public double PerpendicularDistance(Vector2 point, Vector2 lineStart, Vector2 lineEnd)
     {
-        double dx = lineEnd.x - lineStart.x;
-        double dy = lineEnd.y - lineStart.y;
+        double distanceX = lineEnd.x - lineStart.x;
+        double distanceY = lineEnd.y - lineStart.y;
 
         // Normalize
-        double mag = Math.Sqrt(dx * dx + dy * dy);
+        double mag = Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
         if (mag > 0.0)
         {
-            dx /= mag;
-            dy /= mag;
+            distanceX /= mag;
+            distanceY /= mag;
         }
         double pvx = point.x - lineStart.x;
         double pvy = point.y - lineStart.y;
 
         // Get dot product (project pv onto normalized direction)
-        double pvdot = dx * pvx + dy * pvy;
+        double pvdot = distanceX * pvx + distanceY * pvy;
 
         // Scale line direction vector and subtract it from pv
-        double ax = pvx - pvdot * dx;
-        double ay = pvy - pvdot * dy;
+        double ax = pvx - pvdot * distanceX;
+        double ay = pvy - pvdot * distanceY;
 
         return Math.Sqrt(ax * ax + ay * ay);
     }
